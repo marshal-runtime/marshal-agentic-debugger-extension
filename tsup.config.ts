@@ -1,0 +1,87 @@
+import { defineConfig } from 'tsup';
+
+export default defineConfig([
+  {
+    entry: {
+      'runtime-extension': 'src/runtime/entry.ts',
+    },
+    format: ['cjs'],
+    platform: 'node',
+    target: 'node18',
+    dts: false,
+    sourcemap: true,
+    clean: true,
+    splitting: false,
+    treeshake: true,
+    noExternal: [/.*/],
+    outExtension: () => ({ js: '.cjs' }),
+  },
+  {
+    entry: {
+      index: 'src/index.ts',
+      'runtime/index': 'src/runtime/index.ts',
+    },
+    format: ['esm'],
+    platform: 'node',
+    target: 'node18',
+    dts: false,
+    sourcemap: true,
+    clean: false,
+    splitting: true,
+    treeshake: true,
+    shims: false,
+    outExtension: () => ({ js: '.mjs' }),
+  },
+  {
+    entry: {
+      'runtime/native-host': 'src/runtime/native-host.ts',
+    },
+    format: ['esm'],
+    platform: 'node',
+    target: 'node18',
+    dts: false,
+    sourcemap: true,
+    clean: false,
+    splitting: false,
+    treeshake: true,
+    shims: true,
+    noExternal: [/.*/],
+    banner: {
+      js: "import { createRequire as __createRequire } from 'module'; const require = __createRequire(import.meta.url);",
+    },
+    outExtension: () => ({ js: '.mjs' }),
+  },
+  {
+    entry: {
+      cli: 'src/cli.ts',
+    },
+    format: ['esm'],
+    platform: 'node',
+    target: 'node18',
+    dts: false,
+    sourcemap: true,
+    clean: false,
+    splitting: false,
+    treeshake: true,
+    shims: false,
+    banner: {
+      js: '#!/usr/bin/env node',
+    },
+    outExtension: () => ({ js: '.mjs' }),
+  },
+  {
+    entry: {
+      'ui/index': 'src/ui/index.ts',
+    },
+    format: ['esm'],
+    platform: 'browser',
+    target: 'es2022',
+    dts: false,
+    sourcemap: true,
+    clean: false,
+    splitting: true,
+    treeshake: true,
+    external: ['react', 'react-dom', 'react/jsx-runtime', '@monaco-editor/react', 'monaco-editor'],
+    outExtension: () => ({ js: '.mjs' }),
+  },
+]);

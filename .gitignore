@@ -1,0 +1,47 @@
+# Dependencies
+node_modules/
+
+# Build output (the verified extension entrypoint is committed)
+dist/*
+!dist/runtime-extension.cjs
+
+# Downloaded adapters (from postinstall script)
+/adapters/
+
+# Coverage
+coverage/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Environment
+.env
+.env.local
+
+# Logs
+*.log
+audit.log
+
+# Temporary debug output files
+dap_err.txt
+dap_out.txt
+attach_err.txt
+attach_out.txt
+clr-test-err.txt
+
+# Test output
+dist-ui-test/
+.vitest/
+.temp/
+tmp/
+temp/
+*.tsbuildinfo
+tests/integration/helpers/test-programs/csharp/bin/
+tests/integration/helpers/test-programs/csharp/obj/

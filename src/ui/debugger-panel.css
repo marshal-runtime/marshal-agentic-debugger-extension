@@ -1,0 +1,661 @@
+.adb-debugger-panel {
+  --adb-bg: #111318;
+  --adb-panel: #171a21;
+  --adb-panel-raised: #1d212a;
+  --adb-border: #303541;
+  --adb-text: #f1f3f7;
+  --adb-muted: #9ca5b5;
+  --adb-accent: #7aa2f7;
+  --adb-accent-strong: #4f7fe8;
+  --adb-danger: #ff6b75;
+  --adb-success: #62d49c;
+  --adb-warning: #f1c75b;
+  display: flex;
+  min-height: 36rem;
+  height: 100%;
+  min-width: 0;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid var(--adb-border);
+  border-radius: 10px;
+  background: var(--adb-bg);
+  color: var(--adb-text);
+  font:
+    12px/1.45 Inter,
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    sans-serif;
+}
+
+.adb-theme-light {
+  --adb-bg: #f6f7fa;
+  --adb-panel: #ffffff;
+  --adb-panel-raised: #eef1f6;
+  --adb-border: #d5d9e2;
+  --adb-text: #1d2330;
+  --adb-muted: #687386;
+  --adb-accent: #315fbb;
+  --adb-accent-strong: #244f9f;
+  --adb-danger: #bd2737;
+  --adb-success: #137a4b;
+  --adb-warning: #936b00;
+}
+
+.adb-debugger-panel *,
+.adb-debugger-panel *::before,
+.adb-debugger-panel *::after {
+  box-sizing: border-box;
+}
+
+.adb-debugger-panel button,
+.adb-debugger-panel input {
+  font: inherit;
+}
+
+.adb-toolbar,
+.adb-file-bar,
+.adb-bottom h3,
+.adb-sources h3 {
+  min-height: 36px;
+  border-bottom: 1px solid var(--adb-border);
+}
+
+.adb-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 6px 10px;
+  background: var(--adb-panel-raised);
+}
+
+.adb-title-group,
+.adb-controls,
+.adb-row-heading,
+.adb-checkbox-label {
+  display: flex;
+  align-items: center;
+}
+
+.adb-title-group {
+  min-width: 0;
+  gap: 8px;
+}
+
+.adb-title-group h2,
+.adb-sources h3,
+.adb-bottom h3 {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 650;
+}
+
+.adb-title-group h2 {
+  font-size: 14px;
+}
+
+.adb-status,
+.adb-origin,
+.adb-count {
+  border-radius: 999px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-size: 9px;
+  font-weight: 700;
+}
+
+.adb-status {
+  padding: 3px 7px;
+  background: var(--adb-panel);
+}
+
+.adb-status-paused {
+  color: var(--adb-warning);
+}
+
+.adb-status-running {
+  color: var(--adb-success);
+}
+
+.adb-status-completed {
+  color: var(--adb-muted);
+}
+
+.adb-status-message,
+.adb-completed-note,
+.adb-empty {
+  color: var(--adb-muted);
+}
+
+.adb-status-message {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.adb-controls {
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 5px;
+}
+
+.adb-button {
+  min-height: 27px;
+  border: 1px solid var(--adb-border);
+  border-radius: 5px;
+  padding: 4px 9px;
+  background: var(--adb-panel);
+  color: var(--adb-text);
+  cursor: pointer;
+}
+
+.adb-button:hover:not(:disabled) {
+  border-color: var(--adb-accent);
+}
+
+.adb-button:focus-visible,
+.adb-debugger-panel input:focus-visible,
+.adb-debugger-panel summary:focus-visible,
+.adb-debugger-panel nav button:focus-visible,
+.adb-stack button:focus-visible {
+  outline: 2px solid var(--adb-accent);
+  outline-offset: 1px;
+}
+
+.adb-button:disabled,
+.adb-debugger-panel input:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
+}
+
+.adb-button-primary {
+  border-color: var(--adb-accent-strong);
+  background: var(--adb-accent-strong);
+  color: #fff;
+}
+
+.adb-button-subtle {
+  background: var(--adb-panel-raised);
+}
+
+.adb-button-danger {
+  color: var(--adb-danger);
+}
+
+.adb-error {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 7px 10px;
+  border-bottom: 1px solid color-mix(in srgb, var(--adb-danger) 50%, var(--adb-border));
+  background: color-mix(in srgb, var(--adb-danger) 12%, var(--adb-bg));
+  color: var(--adb-danger);
+}
+
+.adb-error-dismiss {
+  border: 0;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.adb-workbench {
+  display: grid;
+  min-height: 0;
+  flex: 1 1 auto;
+  grid-template-columns: minmax(9rem, 0.7fr) minmax(20rem, 3fr) minmax(16rem, 1.25fr);
+}
+
+.adb-sources,
+.adb-inspector {
+  min-height: 0;
+  overflow: auto;
+  background: var(--adb-panel);
+}
+
+.adb-sources {
+  border-right: 1px solid var(--adb-border);
+}
+
+.adb-sources h3,
+.adb-bottom h3 {
+  display: flex;
+  align-items: center;
+  padding: 0 10px;
+  background: var(--adb-panel-raised);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--adb-muted);
+}
+
+.adb-sources ul,
+.adb-stack,
+.adb-variable-tree,
+.adb-watch-list,
+.adb-breakpoint-list,
+.adb-events ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.adb-sources button,
+.adb-stack button {
+  width: 100%;
+  border: 0;
+  background: transparent;
+  color: var(--adb-text);
+  text-align: left;
+  cursor: pointer;
+}
+
+.adb-sources button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 6px 9px;
+}
+
+.adb-sources button:hover,
+.adb-source-active {
+  background: color-mix(in srgb, var(--adb-accent) 13%, transparent) !important;
+}
+
+.adb-sources button span:first-child {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.adb-count {
+  min-width: 17px;
+  padding: 1px 5px;
+  background: var(--adb-accent-strong);
+  color: #fff;
+  text-align: center;
+}
+
+.adb-editor-region {
+  display: flex;
+  min-width: 0;
+  min-height: 0;
+  flex-direction: column;
+  background: var(--adb-bg);
+}
+
+.adb-file-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 0 10px;
+  color: var(--adb-muted);
+}
+
+.adb-file-bar span:first-child {
+  color: var(--adb-text);
+}
+
+.adb-editor-shell {
+  min-height: 18rem;
+  flex: 1 1 auto;
+}
+
+.adb-editor-empty,
+.adb-editor-loading {
+  display: grid;
+  height: 100%;
+  place-items: center;
+  color: var(--adb-muted);
+}
+
+.adb-inspector {
+  border-left: 1px solid var(--adb-border);
+}
+
+.adb-inspector > details {
+  border-bottom: 1px solid var(--adb-border);
+}
+
+.adb-inspector > details > summary {
+  padding: 8px 10px;
+  background: var(--adb-panel-raised);
+  cursor: pointer;
+  font-weight: 650;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.adb-stack button {
+  display: grid;
+  gap: 1px;
+  padding: 7px 10px 7px 16px;
+}
+
+.adb-stack button:hover,
+.adb-frame-active {
+  background: color-mix(in srgb, var(--adb-accent) 13%, transparent) !important;
+}
+
+.adb-stack strong {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.adb-stack span,
+.adb-variable-type,
+.adb-unverified {
+  color: var(--adb-muted);
+  font-size: 10px;
+}
+
+.adb-variable-tree {
+  padding: 5px 8px 7px 12px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+
+.adb-variable-tree .adb-variable-tree {
+  padding-left: 18px;
+}
+
+.adb-variable-tree li {
+  min-width: 0;
+  padding: 2px 0;
+}
+
+.adb-variable-tree summary {
+  cursor: pointer;
+}
+
+.adb-variable-name {
+  color: var(--adb-accent);
+}
+
+.adb-variable-value {
+  overflow-wrap: anywhere;
+}
+
+.adb-variable-type {
+  margin-left: 6px;
+}
+
+.adb-redacted,
+.adb-value-error {
+  color: var(--adb-danger);
+}
+
+.adb-empty {
+  margin: 0;
+  padding: 9px 10px;
+  font-style: italic;
+}
+
+.adb-inline-form,
+.adb-breakpoint-editor,
+.adb-console-form {
+  display: flex;
+  gap: 5px;
+}
+
+.adb-inline-form {
+  padding: 8px;
+}
+
+.adb-debugger-panel input {
+  min-width: 0;
+  border: 1px solid var(--adb-border);
+  border-radius: 4px;
+  padding: 5px 7px;
+  background: var(--adb-bg);
+  color: var(--adb-text);
+}
+
+.adb-inline-form input,
+.adb-console-form input {
+  flex: 1 1 auto;
+}
+
+.adb-watch-list li {
+  position: relative;
+  display: grid;
+  gap: 4px;
+  padding: 7px 32px 7px 10px;
+  border-top: 1px solid var(--adb-border);
+}
+
+.adb-watch-list li > div {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+}
+
+.adb-watch-list code,
+.adb-console-entry code {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.adb-watch-list li > button {
+  position: absolute;
+  top: 7px;
+  right: 6px;
+  border: 0;
+  background: transparent;
+  color: var(--adb-muted);
+  cursor: pointer;
+  font-size: 0;
+}
+
+.adb-watch-list li > button::after {
+  content: 'x';
+  font-size: 12px;
+}
+
+.adb-watch-value {
+  color: var(--adb-success);
+}
+
+.adb-origin {
+  flex: 0 0 auto;
+  padding: 1px 5px;
+}
+
+.adb-origin-agent {
+  background: color-mix(in srgb, var(--adb-accent) 18%, transparent);
+  color: var(--adb-accent);
+}
+
+.adb-origin-human {
+  background: color-mix(in srgb, var(--adb-success) 16%, transparent);
+  color: var(--adb-success);
+}
+
+.adb-breakpoint-list {
+  display: grid;
+}
+
+.adb-breakpoint-row {
+  display: grid;
+  gap: 6px;
+  padding: 8px;
+  border-top: 1px solid var(--adb-border);
+}
+
+.adb-row-heading {
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.adb-checkbox-label {
+  min-width: 0;
+  gap: 6px;
+}
+
+.adb-checkbox-label input {
+  flex: 0 0 auto;
+}
+
+.adb-checkbox-label span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.adb-breakpoint-editor input {
+  flex: 1 1 auto;
+}
+
+.adb-bottom {
+  display: grid;
+  min-height: 10rem;
+  max-height: 15rem;
+  grid-template-columns: 1.35fr 1fr;
+  border-top: 1px solid var(--adb-border);
+  background: var(--adb-panel);
+}
+
+.adb-console,
+.adb-events {
+  display: flex;
+  min-width: 0;
+  min-height: 0;
+  flex-direction: column;
+}
+
+.adb-console {
+  border-right: 1px solid var(--adb-border);
+}
+
+.adb-console-output,
+.adb-events ol {
+  min-height: 0;
+  flex: 1 1 auto;
+  overflow: auto;
+}
+
+.adb-console-entry {
+  display: grid;
+  grid-template-columns: auto minmax(6rem, 1fr) minmax(6rem, 1fr) auto;
+  align-items: baseline;
+  gap: 7px;
+  padding: 4px 8px;
+  border-bottom: 1px solid color-mix(in srgb, var(--adb-border) 65%, transparent);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+
+.adb-console-entry time,
+.adb-events time {
+  color: var(--adb-muted);
+  font-size: 10px;
+}
+
+.adb-console-form {
+  align-items: center;
+  padding: 6px 8px;
+  border-top: 1px solid var(--adb-border);
+}
+
+.adb-events li {
+  display: grid;
+  grid-template-columns: auto auto minmax(0, 1fr);
+  gap: 7px;
+  padding: 4px 8px;
+  border-bottom: 1px solid color-mix(in srgb, var(--adb-border) 65%, transparent);
+}
+
+.adb-events li > span {
+  color: var(--adb-accent);
+  text-transform: uppercase;
+  font-size: 9px;
+}
+
+.adb-events pre {
+  margin: 0;
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+  font: inherit;
+}
+
+.adb-event-stderr pre {
+  color: var(--adb-danger);
+}
+
+.adb-current-execution-line {
+  background: color-mix(in srgb, var(--adb-warning) 17%, transparent);
+  border-top: 1px solid color-mix(in srgb, var(--adb-warning) 40%, transparent);
+  border-bottom: 1px solid color-mix(in srgb, var(--adb-warning) 40%, transparent);
+}
+
+.adb-current-execution-glyph::before {
+  content: '';
+  display: block;
+  width: 0;
+  height: 0;
+  margin: 5px 0 0 5px;
+  border-top: 5px solid transparent;
+  border-bottom: 5px solid transparent;
+  border-left: 8px solid var(--adb-warning);
+}
+
+.adb-breakpoint-glyph::before {
+  content: '';
+  display: block;
+  width: 10px;
+  height: 10px;
+  margin: 5px 0 0 4px;
+  border: 2px solid var(--adb-bg);
+  border-radius: 50%;
+  background: var(--adb-danger);
+  box-shadow: 0 0 0 1px var(--adb-danger);
+}
+
+.adb-breakpoint-glyph-agent::before {
+  background: var(--adb-accent);
+  box-shadow: 0 0 0 1px var(--adb-accent);
+}
+
+.adb-breakpoint-glyph-disabled::before {
+  background: transparent;
+  opacity: 0.65;
+}
+
+@media (max-width: 900px) {
+  .adb-toolbar {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .adb-controls {
+    justify-content: flex-start;
+  }
+
+  .adb-workbench {
+    grid-template-columns: 10rem minmax(18rem, 1fr);
+  }
+
+  .adb-inspector {
+    grid-column: 1 / -1;
+    max-height: 18rem;
+    border-top: 1px solid var(--adb-border);
+    border-left: 0;
+  }
+
+  .adb-bottom {
+    max-height: none;
+    grid-template-columns: 1fr;
+  }
+
+  .adb-console {
+    border-right: 0;
+    border-bottom: 1px solid var(--adb-border);
+  }
+}

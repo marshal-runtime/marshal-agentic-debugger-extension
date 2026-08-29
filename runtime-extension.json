@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "identity": "@marshal/agentic-debugger-extension",
+  "version": "1.0.0",
+  "entrypoint": "dist/runtime-extension.cjs",
+  "moduleFormat": "commonjs-bundle-v1",
+  "dependencies": {
+    "services": [
+      {
+        "id": "marshal.agentic-debugger.host-adapter"
+      }
+    ]
+  },
+  "provides": {
+    "services": [
+      {
+        "id": "@marshal/agentic-debugger:debugger",
+        "version": "1.0.0",
+        "declaration": "export type JsonPrimitive = string | number | boolean | null;\n\nexport type JsonValue = JsonPrimitive | readonly JsonValue[] | { readonly [key: string]: JsonValue };\n\nexport interface DebuggerInvokeInput {\n  readonly capability: string;\n  readonly input: { readonly [key: string]: JsonValue };\n}\n\nexport interface DebuggerScopeBinding {\n  readonly chatId: string;\n  readonly sessionId: string;\n  readonly workspaceName: string;\n  readonly executionBlockId: string;\n  readonly scopeKey: string;\n}\n\nexport interface DebuggerExecutionBlock {\n  readonly id: string;\n  readonly capability: string;\n  readonly debuggerSessionId?: string;\n  readonly scope: DebuggerScopeBinding;\n  readonly status: 'running' | 'completed' | 'failed' | 'cancelled';\n  readonly createdAt: string;\n  readonly completedAt?: string;\n  readonly error?: {\n    readonly code: string;\n    readonly message: string;\n  };\n}\n\nexport interface DebuggerUiOpenResult {\n  readonly action: 'opened-and-focused' | 'unavailable';\n  readonly instanceId?: string;\n}\n\nexport interface DebuggerProvenance {\n  readonly source: string;\n  readonly uri?: string;\n  readonly retrievedAt?: string;\n  readonly trust?: 'unverified' | 'low' | 'medium' | 'high' | 'authoritative';\n}\n\nexport interface DebuggerDiagnostic {\n  readonly level: 'debug' | 'info' | 'warning' | 'error';\n  readonly code?: string;\n  readonly message: string;\n  readonly details?: unknown;\n}\n\nexport interface DebuggerReceipt {\n  readonly id: string;\n  readonly providerId: string;\n  readonly capability: string;\n  readonly executionBlockId: string;\n  readonly scopeKey: string;\n  readonly completedAt: string;\n}\n\nexport interface DebuggerInvokeOutput {\n  readonly output: {\n    readonly value: unknown;\n    readonly scope: DebuggerScopeBinding;\n    readonly executionBlock: DebuggerExecutionBlock;\n    readonly ui?: DebuggerUiOpenResult;\n  };\n  readonly provenance?: readonly DebuggerProvenance[];\n  readonly diagnostics?: readonly DebuggerDiagnostic[];\n  readonly metadata?: Readonly<Record<string, unknown>>;\n  readonly receipt?: DebuggerReceipt;\n}\n\nexport interface IDebugger {\n  invoke(input: DebuggerInvokeInput): Promise<DebuggerInvokeOutput>;\n}",
+        "publicMethods": [
+          {
+            "name": "invoke",
+            "input": "DebuggerInvokeInput",
+            "output": "DebuggerInvokeOutput"
+          }
+        ]
+      }
+    ]
+  },
+  "docs": ["docs/marshal-runtime-extension.md"],
+  "resources": [],
+  "examples": [
+    {
+      "language": "typescript",
+      "code": "const debuggerService = AppServices.getDebugger();\nconst result = await debuggerService.invoke({ capability: 'debug.session.list', input: {} });"
+    }
+  ],
+  "appServicesSnippet": "const debuggerService = AppServices.getDebugger();"
+}

@@ -1,0 +1,125 @@
+{
+  "name": "@marshal/agentic-debugger-extension",
+  "version": "1.0.0",
+  "description": "Independent Marshal runtime extension, CLI, MCP server, DAP engine, native adapters, and Monaco debugger UI",
+  "type": "commonjs",
+  "main": "dist/runtime-extension.cjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/types/runtime/entry.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/types/runtime/entry.d.ts",
+      "require": "./dist/runtime-extension.cjs",
+      "default": "./dist/runtime-extension.cjs"
+    },
+    "./core": {
+      "import": "./dist/index.mjs",
+      "types": "./dist/types/index.d.ts"
+    },
+    "./runtime": {
+      "import": "./dist/runtime/index.mjs",
+      "types": "./dist/types/runtime/index.d.ts"
+    },
+    "./native": {
+      "import": "./dist/runtime/native-host.mjs",
+      "types": "./dist/types/runtime/native-host.d.ts"
+    },
+    "./ui": {
+      "import": "./dist/ui/index.mjs",
+      "types": "./dist/types/ui/index.d.ts"
+    },
+    "./ui/styles.css": {
+      "default": "./dist/ui/index.css"
+    }
+  },
+  "bin": {
+    "agentic-debugger": "./dist/cli.mjs"
+  },
+  "files": [
+    "dist",
+    "adapters",
+    "contracts",
+    "runtime-extension.json",
+    "scripts/postinstall.mjs",
+    "docs",
+    "README.md",
+    "LICENSE"
+  ],
+  "sideEffects": [
+    "./dist/ui/index.css"
+  ],
+  "scripts": {
+    "build": "tsup && tsc -p tsconfig.types.json",
+    "build:watch": "tsup --watch",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint src/ tests/",
+    "lint:fix": "eslint src/ tests/ --fix",
+    "format": "prettier --write \"src/runtime/**/*.{ts,tsx}\" \"src/ui/**/*.{ts,tsx,css}\" \"src/session/session.ts\" \"src/dap/{client,router}.ts\" \"src/adapters/debugpy/index.ts\" \"src/adapters/clr-debug/*.ts\" \"tests/helpers/**/*.ts\" \"tests/unit/runtime/**/*.ts\" \"tests/unit/ui/**/*.tsx\" \"tests/unit/dap/router.test.ts\" \"tests/unit/adapters/debugpy-args.test.ts\" \"tests/integration/debugpy.integration.test.ts\" \"tests/acceptance/**/*.ts\"",
+    "format:check": "prettier --check \"src/runtime/**/*.{ts,tsx}\" \"src/ui/**/*.{ts,tsx,css}\" \"src/session/session.ts\" \"src/dap/{client,router}.ts\" \"src/adapters/debugpy/index.ts\" \"src/adapters/clr-debug/*.ts\" \"tests/helpers/**/*.ts\" \"tests/unit/runtime/**/*.ts\" \"tests/unit/ui/**/*.tsx\" \"tests/unit/dap/router.test.ts\" \"tests/unit/adapters/debugpy-args.test.ts\" \"tests/integration/debugpy.integration.test.ts\" \"tests/acceptance/**/*.ts\"",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "test:unit": "vitest run --project unit",
+    "test:integration": "vitest run --project integration",
+    "test:e2e": "vitest run --project e2e",
+    "test:acceptance": "vitest run --project acceptance",
+    "test:manifest": "node --test tests/review/*.test.mjs",
+    "provision:adapters": "node scripts/postinstall.mjs",
+    "check": "npm run typecheck && npm run lint && npm run test && npm run build && npm run test:manifest",
+    "prepack": "npm run build",
+    "prepublishOnly": "npm run check"
+  },
+  "keywords": [
+    "debugger",
+    "debug",
+    "dap",
+    "debug-adapter-protocol",
+    "mcp",
+    "model-context-protocol",
+    "ai",
+    "agent",
+    "cli",
+    "agentic",
+    "marshal",
+    "runtime-extension",
+    "monaco"
+  ],
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.26.0",
+    "@vscode/debugprotocol": "^1.68.0",
+    "commander": "^12.1.0",
+    "nanoid": "^5.1.6",
+    "pino": "^9.14.0",
+    "pino-roll": "^4.0.0",
+    "zod": "^3.25.76",
+    "zod-to-json-schema": "^3.25.1"
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.0",
+    "@types/node": "^22.19.11",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "@typescript-eslint/eslint-plugin": "^8.55.0",
+    "@typescript-eslint/parser": "^8.55.0",
+    "@vitest/coverage-v8": "^3.2.4",
+    "eslint": "^9.39.2",
+    "eslint-config-prettier": "^10.1.8",
+    "jsdom": "^26.1.0",
+    "pino-pretty": "^13.1.3",
+    "prettier": "^3.8.1",
+    "react": "^19.2.5",
+    "react-dom": "^19.2.5",
+    "tsup": "^8.5.1",
+    "typescript": "5.7",
+    "vitest": "^3.2.4"
+  },
+  "peerDependencies": {
+    "react": ">=18.3.1 <20",
+    "react-dom": ">=18.3.1 <20"
+  }
+}
