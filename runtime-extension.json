@@ -2,6 +2,12 @@
   "schemaVersion": 1,
   "identity": "@marshal/agentic-debugger-extension",
   "version": "1.0.0",
+  "agentGuidance": {
+      "purpose": "Debug Adapter Protocol debugging: session control, breakpoints, stepping, stack and variable inspection, expression evaluation, and a debugger panel for JavaScript/TypeScript, Python, and C#/.NET.",
+      "when": "Runtime behavior must be observed rather than inferred: stepping through failing code, inspecting live state at a breakpoint, or attaching to a running Node.js inspector session.",
+      "recipe": "Discover with runtimeSearch {query:\"debug\"}; invoke debugger capabilities such as debug.session.list through the runtime, or the @marshal/agentic-debugger:debugger service (AppServices.getDebugger().invoke). Docs: docs/marshal-runtime-extension.md.",
+      "boundaries": "Needs a matching debug adapter for the target language; the supported standalone flow is attaching to an existing Node.js inspector. Do not evaluate expressions with side effects in production processes without authorization."
+  },
   "entrypoint": "dist/runtime-extension.cjs",
   "moduleFormat": "commonjs-bundle-v1",
   "dependencies": {
